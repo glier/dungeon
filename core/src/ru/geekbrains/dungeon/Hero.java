@@ -14,15 +14,13 @@ public class Hero {
     private Vector2 velocity;
     private Vector2 gameField;
     private TextureRegion texture;
-    private SpriteBatch batch;
     private boolean shotMultiple;
     private final float speed = 100.0f;
 
-    public Hero(SpriteBatch batch, GameMap gameMap, TextureAtlas atlas, ProjectileController projectileController) {
+    public Hero(GameMap gameMap, TextureAtlas atlas, ProjectileController projectileController) {
         this.position = new Vector2(100, 100);
         this.velocity = new Vector2(speed,0);
         this.gameField = gameMap.getSize();
-        this.batch = batch;
         this.texture = atlas.findRegion("tank");
         this.projectileController = projectileController;
     }

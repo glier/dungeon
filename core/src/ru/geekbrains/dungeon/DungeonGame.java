@@ -15,12 +15,12 @@ public class DungeonGame extends ApplicationAdapter {
     private Hero hero;
 
     // Домашнее задание:
-    // 0. Разобраться со структурой кода +
+    // 0. Разобраться со структурой кода  +
     // 1. Кнопкой Q необходимо переключать режим стрельбы: либо стреляем по одному снаряду,
-    // либо по 2 +
+    // либо по 2  +
     // 2. На векторах сделайте движение в разные стороны (влево, вверх, вниз, вправо),
-    // с запретом на выезд за пределы карты +
-    // 3. * Снаряд должен выпускаться в сторону последнего движения +
+    // с запретом на выезд за пределы карты  +
+    // 3. * Снаряд должен выпускаться в сторону последнего движения  +
 
     @Override
     public void create() {
@@ -28,7 +28,7 @@ public class DungeonGame extends ApplicationAdapter {
         atlas = new TextureAtlas("images/game.pack");
         gameMap = new GameMap(atlas);
         projectileController = new ProjectileController(atlas);
-        hero = new Hero(batch, gameMap, atlas, projectileController);
+        hero = new Hero(gameMap, atlas, projectileController);
 
     }
 
