@@ -132,4 +132,12 @@ public abstract class Unit {
     public int getTurns() {
         return turns;
     }
+
+    public boolean isCellEmpty(int cx, int cy) {
+        return gc.getGameMap().isCellPassable(cx,cy) && gc.getUnitController().isCellFree(cx, cy);
+    }
+
+    public boolean amIBlocked() {
+        return !(isCellEmpty(cellX - 1, cellY) || isCellEmpty(cellX + 1, cellY) || isCellEmpty(cellX, cellY - 1) || isCellEmpty(cellX, cellY + 1));
+    }
 }
