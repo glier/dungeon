@@ -1,8 +1,6 @@
-package ru.geekbrains.dungeon;
+package ru.geekbrains.dungeon.game;
 
 import com.badlogic.gdx.math.MathUtils;
-import org.graalvm.compiler.loop.MathUtil;
-import ru.geekbrains.dungeon.units.Unit;
 
 public class BattleCalc {
     public static int attack(Unit attacker, Unit target) {
@@ -16,8 +14,7 @@ public class BattleCalc {
 
     public static int checkCounterAttack(Unit attacker, Unit target) {
         if (MathUtils.random() < 0.2f) {
-            int amount = attack(target, attacker);
-            return amount;
+            return attack(target, attacker);
         }
         return 0;
     }
