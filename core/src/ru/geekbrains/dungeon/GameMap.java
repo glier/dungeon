@@ -1,10 +1,8 @@
 package ru.geekbrains.dungeon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 public class GameMap {
     public static final int CELLS_X = 20;
@@ -49,15 +47,5 @@ public class GameMap {
                 }
             }
         }
-    }
-
-    public Vector2 getSize() {
-        int windowH = Gdx.app.getGraphics().getHeight();
-        int windowW = Gdx.app.getGraphics().getWidth();
-        int gameFieldH = (CELLS_X - 1) * grassTexture.getRegionHeight();
-        int gameFieldW = (CELLS_Y - 1) * grassTexture.getRegionWidth();
-
-        return new Vector2(Math.min(windowW, gameFieldW),
-                Math.min(windowH, gameFieldH));
     }
 }
