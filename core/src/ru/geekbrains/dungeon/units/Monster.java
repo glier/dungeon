@@ -1,9 +1,9 @@
 package ru.geekbrains.dungeon.units;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import ru.geekbrains.dungeon.GameController;
+import ru.geekbrains.dungeon.Utils;
 
 public class Monster extends Unit {
     private float aiBrainsImplseTime;
@@ -32,24 +32,41 @@ public class Monster extends Unit {
             if (isStayStill()) {
                 aiBrainsImplseTime += dt;
             }
-            if (aiBrainsImplseTime > 0.4f) {
-                aiBrainsImplseTime = 0.0f;
-                if (canIAttackThisTarget(target)) {
-                    attack(target);
-                } else {
-                    tryToMove();
-                }
+            think(dt);
+        }
+    }
+
+    public void think(float dt) {
+        if (aiBrainsImplseTime > 0.4f) {
+            aiBrainsImplseTime = 0.0f;
+            if (canIAttackThisTarget(target)) {
+                attack(target);
+                return;
+            }
+            if(amIBlocked()) {
+                turns = 0;
+                return;
+            }
+            if(Utils.getCellsIntDistance(cellX, cellY, target.getCellX(), target.getCellY()) < 5) {
+                tryToMove(target.getCellX(), target.getCellY());
+            } else {
+                int dx, dy;
+                do {
+                    dx = MathUtils.random(0, gc.getGameMap().getCellsX() - 1);
+                    dy = MathUtils.random(0, gc.getGameMap().getCellsY() - 1);
+                } while (!(isCellEmpty(dx, dy)) && Utils.isCellAreNeighbours(cellX, cellY, dx, dy));
+                tryToMove(dx, dy);
             }
         }
     }
 
-    public void tryToMove() {
+    public void tryToMove(int preferredX, int preferredY) {
         int bestX = -1, bestY = -1;
         float bestDst = 10000;
         for (int i = cellX - 1; i <= cellX + 1; i++) {
             for (int j = cellY - 1; j <= cellY + 1; j++) {
-                if (Math.abs(cellX - i) + Math.abs(cellY - j) == 1 && gc.getGameMap().isCellPassable(i, j) && gc.getUnitController().isCellFree(i, j)) {
-                    float dst = (float) Math.sqrt((i - target.getCellX()) * (i - target.getCellX()) + (j - target.getCellY()) * (j - target.getCellY()));
+                if (Utils.isCellAreNeighbours(cellX, cellY, i, j) && isCellEmpty(i, j)) {
+                    float dst = Utils.getCellsFloatDistance(preferredX, preferredY, i, j);
                     if (dst < bestDst) {
                         bestDst = dst;
                         bestX = i;
