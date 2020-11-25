@@ -16,8 +16,10 @@ public class MonsterController extends ObjectPool<Monster> {
         return new Monster(gc);
     }
 
-    public void activate(int cellX, int cellY) {
-        getActiveElement().activate(cellX, cellY);
+    public Monster activate(int cellX, int cellY) {
+        Monster m = getActiveElement();
+        m.activate(cellX, cellY);
+        return m;
     }
 
     public Monster getMonsterInCell(int cellX, int cellY) {
