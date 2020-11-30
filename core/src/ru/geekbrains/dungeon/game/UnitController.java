@@ -13,6 +13,7 @@ public class UnitController {
     private Unit currentUnit;
     private int index;
     private List<Unit> allUnits;
+    private int round;
 
     public MonsterController getMonsterController() {
         return monsterController;
@@ -48,6 +49,7 @@ public class UnitController {
         this.allUnits = new ArrayList<>();
         this.allUnits.add(hero);
         this.allUnits.addAll(monsterController.getActiveList());
+        this.round = 0;
         this.nextTurn();
     }
 
@@ -57,7 +59,17 @@ public class UnitController {
             index = 0;
         }
         currentUnit = allUnits.get(index);
+        roundUp(currentUnit);
         currentUnit.startTurn();
+    }
+
+    public void roundUp(Unit currentUnit) {
+        if (currentUnit.equals(hero)) {
+            round++;
+            if ((float) round % 3 == 0.0f) {
+                this.allUnits.add(this.monsterController.activate(9, 5));
+            }
+        }
     }
 
     public void render(SpriteBatch batch, BitmapFont font18) {
@@ -80,5 +92,9 @@ public class UnitController {
         if (unitIndex <= index) {
             index--;
         }
+    }
+
+    public int getRound() {
+        return round;
     }
 }
